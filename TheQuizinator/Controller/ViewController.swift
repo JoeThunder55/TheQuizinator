@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
     
+    
     var gameSound: SystemSoundID = 0
     
     let trivia: [[String : String]] = [
@@ -31,35 +32,14 @@ class ViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
+    @IBOutlet weak var option1: UIButton!
+    @IBOutlet weak var option2: UIButton!
+    @IBOutlet weak var option3: UIButton!
+    @IBOutlet weak var option4: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-       // MARK: - JSON Decoder
-        let jsonUrlString = ""
-        guard let url = URL(string: jsonUrlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-        
-        //perhaps check err
-        //also perhaps check response status 200 OK
-        
-        guard let data = data else { return }
-        
-        let dataAsString = String(data: data, encoding: .utf8)
-        print(dataAsString)
-       
-        do {
-            
-            let trivia = try JSONDecoder().decode(Questions.self, from: data)
-            
-            }
-    }.resume()
-        
-        let myTrivia = 
         
         loadGameStartSound()
         playGameStartSound()
@@ -85,10 +65,17 @@ class ViewController: UIViewController {
         playAgainButton.isHidden = true
     }
     
+    func hideOptionButtons() {
+        option1.isHidden = true
+        option2.isHidden = true
+        option2.isHidden = true
+        option2.isHidden = true
+        
+    }
+    
     func displayScore() {
-        // Hide the answer uttons
-        trueButton.isHidden = true
-        falseButton.isHidden = true
+        // Hide the answer buttons
+       hideOptionButtons()
         
         // Display play again button
         playAgainButton.isHidden = false
@@ -124,10 +111,11 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
+        
         let selectedQuestionDict = trivia[indexOfSelectedQuestion]
         let correctAnswer = selectedQuestionDict["Answer"]
         
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+        if (sender == correctAnswer) {
             correctQuestions += 1
             questionField.text = "Correct!"
         } else {
@@ -140,8 +128,7 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
-        trueButton.isHidden = false
-        falseButton.isHidden = false
+        hideOptionButtons()
         
         questionsAsked = 0
         correctQuestions = 0

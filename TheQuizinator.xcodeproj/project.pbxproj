@@ -58,16 +58,40 @@
 		972A72AF2056F06C0059EF4A /* TheQuizinator */ = {
 			isa = PBXGroup;
 			children = (
-				972A72B02056F06C0059EF4A /* AppDelegate.swift */,
-				972A72B22056F06C0059EF4A /* ViewController.swift */,
-				D780CF392193472500992A14 /* Model.swift */,
-				972A72B42056F06C0059EF4A /* Main.storyboard */,
+				D780CF452197831200992A14 /* Controller */,
+				D780CF432197830700992A14 /* Model */,
+				D780CF442197830E00992A14 /* View */,
 				972A72B72056F06C0059EF4A /* Assets.xcassets */,
-				972A72B92056F06C0059EF4A /* LaunchScreen.storyboard */,
 				972A72BC2056F06C0059EF4A /* Info.plist */,
 				972A72C22056F0E40059EF4A /* GameSound.wav */,
 			);
 			path = TheQuizinator;
+			sourceTree = "<group>";
+		};
+		D780CF432197830700992A14 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D780CF392193472500992A14 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		D780CF442197830E00992A14 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				972A72B92056F06C0059EF4A /* LaunchScreen.storyboard */,
+				972A72B42056F06C0059EF4A /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D780CF452197831200992A14 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				972A72B02056F06C0059EF4A /* AppDelegate.swift */,
+				972A72B22056F06C0059EF4A /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,12 +308,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WMWTV546RX;
-				INFOPLIST_FILE = EnhanceQuizStarter/Info.plist;
+				INFOPLIST_FILE = TheQuizinator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamtreehouse.TheQuizinator;
+				PRODUCT_BUNDLE_IDENTIFIER = INC.AlphaGrade.TheQuizinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -299,12 +323,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WMWTV546RX;
-				INFOPLIST_FILE = EnhanceQuizStarter/Info.plist;
+				INFOPLIST_FILE = TheQuizinator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.teamtreehouse.TheQuizinator;
+				PRODUCT_BUNDLE_IDENTIFIER = INC.AlphaGrade.TheQuizinator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
