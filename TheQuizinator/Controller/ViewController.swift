@@ -19,15 +19,14 @@ class ViewController: UIViewController {
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
     
-    
     var gameSound: SystemSoundID = 0
     
-    let trivia: [[String : String]] = [
-        ["Question": "Only female koalas can whistle", "Answer": "False"],
-        ["Question": "Blue whales are technically whales", "Answer": "True"],
-        ["Question": "Camels are cannibalistic", "Answer": "False"],
-        ["Question": "All ducks are birds", "Answer": "True"]
-    ]
+//    let trivia: [[String : String]] = [
+//        ["Question": "Only female koalas can whistle", "Answer": "False"],
+//        ["Question": "Blue whales are technically whales", "Answer": "True"],
+//        ["Question": "Camels are cannibalistic", "Answer": "False"],
+//        ["Question": "All ducks are birds", "Answer": "True"]
+//    ]
     
     // MARK: - Outlets
     
@@ -59,10 +58,17 @@ class ViewController: UIViewController {
     }
     
     func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
-        let questionDictionary = trivia[indexOfSelectedQuestion]
-        questionField.text = questionDictionary["Question"]
+        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound:questionsPerRound)
+        let questionDisplay = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
+        questionField.text = questionDisplay["Question"]
+        option1.setTitle(questionDisplay["Option1"], for: .normal)
+        option2.setTitle(questionDisplay["Option2"], for: .normal)
+        option3.setTitle(questionDisplay["Option3"], for: .normal)
+        option4.setTitle(questionDisplay["Option4"], for: .normal)
         playAgainButton.isHidden = true
+//        let questionDictionary = trivia[indexOfSelectedQuestion]
+//        questionField.text = questionDictionary["Question"]
+        
     }
     
     func hideOptionButtons() {
@@ -85,7 +91,7 @@ class ViewController: UIViewController {
     
     func nextRound() {
         if questionsAsked == questionsPerRound {
-            // Game is over
+            // Game Over
             displayScore()
         } else {
             // Continue game
@@ -107,24 +113,28 @@ class ViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func checkAnswer(_ sender: UIButton) {
-        // Increment the questions asked counter
-        questionsAsked += 1
+    
+    @IBAction func checkTheAnswer(_ sender: UIButton) {
+                // Increment the questions asked counter
+                questionsAsked += 1
         
         
-        let selectedQuestionDict = trivia[indexOfSelectedQuestion]
-        let correctAnswer = selectedQuestionDict["Answer"]
+                let selectedQuestionDict = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
+                let correctAnswer = selectedQuestionDict["Answer"]
         
-        if (sender == correctAnswer) {
-            correctQuestions += 1
-            questionField.text = "Correct!"
-        } else {
-            questionField.text = "Sorry, wrong answer!"
-        }
+                if (sender == correctAnswer) {
+                    correctQuestions += 1
+                    questionField.text = "Correct!"
+                } else {
+                    questionField.text = "Sorry, wrong answer!"
+                }
+                indexOfSelectedQuestion += 1
+                loadNextRound(delay: 2)
         
-        loadNextRound(delay: 2)
+        
     }
     
+
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
