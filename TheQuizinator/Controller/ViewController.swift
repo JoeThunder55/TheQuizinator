@@ -18,15 +18,9 @@ class ViewController: UIViewController {
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
+    var questionsAlreadyAsked = [Int]()
     
     var gameSound: SystemSoundID = 0
-    
-//    let trivia: [[String : String]] = [
-//        ["Question": "Only female koalas can whistle", "Answer": "False"],
-//        ["Question": "Blue whales are technically whales", "Answer": "True"],
-//        ["Question": "Camels are cannibalistic", "Answer": "False"],
-//        ["Question": "All ducks are birds", "Answer": "True"]
-//    ]
     
     // MARK: - Outlets
     
@@ -57,8 +51,16 @@ class ViewController: UIViewController {
         AudioServicesPlaySystemSound(gameSound)
     }
     
+    func randomizeIndexNumber() {
+        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: Questions.init(questionIndex: indexOfSelectedQuestion).presentPoolCount())
+    }
+    
     func displayQuestion() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound:questionsPerRound)
+        
+        randomizeIndexNumber()
+        randomQuestionIsntRepeated()
+        questionsAlreadyAsked.append(indexOfSelectedQuestion)
+        
         let questionDisplay = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
         questionField.text = questionDisplay["Question"]
         option1.setTitle(questionDisplay["Option1"], for: .normal)
@@ -66,16 +68,32 @@ class ViewController: UIViewController {
         option3.setTitle(questionDisplay["Option3"], for: .normal)
         option4.setTitle(questionDisplay["Option4"], for: .normal)
         playAgainButton.isHidden = true
-//        let questionDictionary = trivia[indexOfSelectedQuestion]
-//        questionField.text = questionDictionary["Question"]
-        
+        showOptionButtons()
+    }
+    
+    func randomQuestionIsntRepeated() {
+        for numbers in questionsAlreadyAsked {
+            if indexOfSelectedQuestion == numbers {
+                randomizeIndexNumber()
+            } else {
+                continue
+            }
+        }
     }
     
     func hideOptionButtons() {
         option1.isHidden = true
         option2.isHidden = true
-        option2.isHidden = true
-        option2.isHidden = true
+        option3.isHidden = true
+        option4.isHidden = true
+        
+    }
+    
+    func showOptionButtons() {
+        option1.isHidden = false
+        option2.isHidden = false
+        option3.isHidden = false
+        option4.isHidden = false
         
     }
     
@@ -122,14 +140,28 @@ class ViewController: UIViewController {
                 let selectedQuestionDict = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
                 let correctAnswer = selectedQuestionDict["Answer"]
         
-                if (sender == correctAnswer) {
+                if (sender == option1 && correctAnswer == "1") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
+                } else if  (sender == option2 && correctAnswer == "2") {
+                    correctQuestions += 1
+                    questionField.text = "Correct!"
+                    
+                } else if (sender == option3 && correctAnswer == "3") {
+                    correctQuestions += 1
+                    questionField.text = "Correct!"
+                
+                } else if (sender == option4 && correctAnswer == "4") {
+                    correctQuestions += 1
+                    questionField.text = "Correct!"
+    
                 } else {
                     questionField.text = "Sorry, wrong answer!"
                 }
                 indexOfSelectedQuestion += 1
+        
                 loadNextRound(delay: 2)
+        
         
         
     }
@@ -138,8 +170,8 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
+        questionsAlreadyAsked = []
         hideOptionButtons()
-        
         questionsAsked = 0
         correctQuestions = 0
         nextRound()

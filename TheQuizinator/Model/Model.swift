@@ -26,6 +26,11 @@ struct Questions {
         
     }
     
+    func presentPoolCount() -> Int {
+        let poolCount = pool.count
+        return poolCount
+    }
+    
    
 }
 
