@@ -144,27 +144,27 @@ class ViewController: UIViewController {
                 if (sender == option1 && correctAnswer == "1") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-                    shownAnswer = selectedQuestionDict["Option1"]!
+                    
                     
                 } else if  (sender == option2 && correctAnswer == "2") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-                    shownAnswer = selectedQuestionDict["Option2"]!
+                    
                     
                 } else if (sender == option3 && correctAnswer == "3") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-                    shownAnswer = selectedQuestionDict["Option3"]!
+                  
                 } else if (sender == option4 && correctAnswer == "4") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-                    shownAnswer = selectedQuestionDict["Option4"]!
+                    
                 } else {
-                    questionField.text = "Sorry, wrong answer! The Correct answer is \(shownAnswer)"
+                    questionField.text = "Sorry, wrong answer!"
                 }
                 indexOfSelectedQuestion += 1
         
-                loadNextRound(delay: 3)
+                loadNextRound(delay: 2)
         
         
         
