@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    let questionsPerRound = 4
+    let questionsPerRound = 10
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion = 0
@@ -75,6 +75,7 @@ class ViewController: UIViewController {
         for numbers in questionsAlreadyAsked {
             if indexOfSelectedQuestion == numbers {
                 randomizeIndexNumber()
+                randomQuestionIsntRepeated()
             } else {
                 continue
             }
@@ -135,7 +136,7 @@ class ViewController: UIViewController {
     @IBAction func checkTheAnswer(_ sender: UIButton) {
                 // Increment the questions asked counter
                 questionsAsked += 1
-        
+                var shownAnswer = String()
         
                 let selectedQuestionDict = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
                 let correctAnswer = selectedQuestionDict["Answer"]
@@ -143,24 +144,27 @@ class ViewController: UIViewController {
                 if (sender == option1 && correctAnswer == "1") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
+                    shownAnswer = selectedQuestionDict["Option1"]!
+                    
                 } else if  (sender == option2 && correctAnswer == "2") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
+                    shownAnswer = selectedQuestionDict["Option2"]!
                     
                 } else if (sender == option3 && correctAnswer == "3") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-                
+                    shownAnswer = selectedQuestionDict["Option3"]!
                 } else if (sender == option4 && correctAnswer == "4") {
                     correctQuestions += 1
                     questionField.text = "Correct!"
-    
+                    shownAnswer = selectedQuestionDict["Option4"]!
                 } else {
-                    questionField.text = "Sorry, wrong answer!"
+                    questionField.text = "Sorry, wrong answer! The Correct answer is \(shownAnswer)"
                 }
                 indexOfSelectedQuestion += 1
         
-                loadNextRound(delay: 2)
+                loadNextRound(delay: 3)
         
         
         
