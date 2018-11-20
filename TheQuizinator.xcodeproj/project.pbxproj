@@ -13,6 +13,7 @@
 		972A72B82056F06C0059EF4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 972A72B72056F06C0059EF4A /* Assets.xcassets */; };
 		972A72BB2056F06C0059EF4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 972A72B92056F06C0059EF4A /* LaunchScreen.storyboard */; };
 		972A72C32056F0E40059EF4A /* GameSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 972A72C22056F0E40059EF4A /* GameSound.wav */; };
+		D756A09721A35E8D00FCAC6D /* PlaySounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D756A09621A35E8D00FCAC6D /* PlaySounds.swift */; };
 		D780CF3A2193472500992A14 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = D780CF392193472500992A14 /* Model.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		972A72BA2056F06C0059EF4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		972A72BC2056F06C0059EF4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		972A72C22056F0E40059EF4A /* GameSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameSound.wav; sourceTree = "<group>"; };
+		D756A09621A35E8D00FCAC6D /* PlaySounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySounds.swift; sourceTree = "<group>"; };
 		D780CF392193472500992A14 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				D780CF392193472500992A14 /* Model.swift */,
+				D756A09621A35E8D00FCAC6D /* PlaySounds.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D780CF3A2193472500992A14 /* Model.swift in Sources */,
+				D756A09721A35E8D00FCAC6D /* PlaySounds.swift in Sources */,
 				972A72B32056F06C0059EF4A /* ViewController.swift in Sources */,
 				972A72B12056F06C0059EF4A /* AppDelegate.swift in Sources */,
 			);
