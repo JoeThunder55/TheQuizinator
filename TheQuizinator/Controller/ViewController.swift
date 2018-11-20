@@ -8,7 +8,7 @@
 
 import UIKit
 import GameKit
-import AudioToolbox
+
 
 class ViewController: UIViewController {
     
@@ -17,10 +17,10 @@ class ViewController: UIViewController {
     let questionsPerRound = 10
     var questionsAsked = 0
     var correctQuestions = 0
-    var indexOfSelectedQuestion = 0
-    var questionsAlreadyAsked = [Int]()
+
     
-    var gameSound: SystemSoundID = 0
+    
+ 
     
     // MARK: - Outlets
     
@@ -39,48 +39,20 @@ class ViewController: UIViewController {
         displayQuestion()
     }
     
-    // MARK: - Helpers
-    
-    func loadGameStartSound() {
-        let path = Bundle.main.path(forResource: "GameSound", ofType: "wav")
-        let soundUrl = URL(fileURLWithPath: path!)
-        AudioServicesCreateSystemSoundID(soundUrl as CFURL, &gameSound)
-    }
-    
-    func playGameStartSound() {
-        AudioServicesPlaySystemSound(gameSound)
-    }
-    
-    func randomizeIndexNumber() {
-        indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: Questions.init(questionIndex: indexOfSelectedQuestion).presentPoolCount())
-    }
-    
+ 
     func displayQuestion() {
-        
-        randomizeIndexNumber()
-        randomQuestionIsntRepeated()
-        questionsAlreadyAsked.append(indexOfSelectedQuestion)
-        
-        let questionDisplay = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
-        questionField.text = questionDisplay["Question"]
-        option1.setTitle(questionDisplay["Option1"], for: .normal)
-        option2.setTitle(questionDisplay["Option2"], for: .normal)
-        option3.setTitle(questionDisplay["Option3"], for: .normal)
-        option4.setTitle(questionDisplay["Option4"], for: .normal)
+        Questions.init().randomizeIndexNumber()
+        let questionDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
+        questionField.text = questionDataPull["Question"]
+        option1.setTitle(questionDataPull["Option1"], for: .normal)
+        option2.setTitle(questionDataPull["Option2"], for: .normal)
+        option3.setTitle(questionDataPull["Option3"], for: .normal)
+        option4.setTitle(questionDataPull["Option4"], for: .normal)
         playAgainButton.isHidden = true
         showOptionButtons()
     }
     
-    func randomQuestionIsntRepeated() {
-        for numbers in questionsAlreadyAsked {
-            if indexOfSelectedQuestion == numbers {
-                randomizeIndexNumber()
-                randomQuestionIsntRepeated()
-            } else {
-                continue
-            }
-        }
-    }
+    
     
     func hideOptionButtons() {
         option1.isHidden = true
@@ -136,10 +108,9 @@ class ViewController: UIViewController {
     @IBAction func checkTheAnswer(_ sender: UIButton) {
                 // Increment the questions asked counter
                 questionsAsked += 1
-                var shownAnswer = String()
-        
-                let selectedQuestionDict = Questions.init(questionIndex: indexOfSelectedQuestion).presentQuestionValues()
-                let correctAnswer = selectedQuestionDict["Answer"]
+//                var shownAnswer = String()
+                let answerDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
+                let correctAnswer = answerDataPull["Answer"]
         
                 if (sender == option1 && correctAnswer == "1") {
                     correctQuestions += 1
@@ -162,7 +133,7 @@ class ViewController: UIViewController {
                 } else {
                     questionField.text = "Sorry, wrong answer!"
                 }
-                indexOfSelectedQuestion += 1
+             
         
                 loadNextRound(delay: 2)
         
