@@ -7,21 +7,10 @@
 //
 
 import UIKit
-import GameKit
 
 
 class ViewController: UIViewController {
-    
-    // MARK: - Properties
-    
-    let questionsPerRound = 10
-    var questionsAsked = 0
-    var correctQuestions = 0
-
-    
-    
- 
-    
+  
     // MARK: - Outlets
     
     @IBOutlet weak var questionField: UILabel!
@@ -30,19 +19,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var option3: UIButton!
     @IBOutlet weak var option4: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
-
+    var valuesFromModel = QuestionValues()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadGameStartSound()
-        playGameStartSound()
+        PlaySounds.init().loadGameStartSound()
+        PlaySounds.init().playGameStartSound()
         displayQuestion()
     }
     
  
     func displayQuestion() {
-        Questions.init().randomizeIndexNumber()
-        let questionDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
+        let randomNumber = QuestionValues.init().randomizeIndexNumber()
+        let questionDataPull = QuestionValues.init().retrieveQuestionValues(index: randomNumber)
         questionField.text = questionDataPull["Question"]
         option1.setTitle(questionDataPull["Option1"], for: .normal)
         option2.setTitle(questionDataPull["Option2"], for: .normal)
@@ -52,14 +41,11 @@ class ViewController: UIViewController {
         showOptionButtons()
     }
     
-    
-    
     func hideOptionButtons() {
         option1.isHidden = true
         option2.isHidden = true
         option3.isHidden = true
         option4.isHidden = true
-        
     }
     
     func showOptionButtons() {
@@ -77,17 +63,20 @@ class ViewController: UIViewController {
         // Display play again button
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+        questionField.text = "Way to go!\nYou got \(QuestionValues.init().correctQuestions) out of \(QuestionValues.init().questionsPerRound) correct!"
     }
     
     func nextRound() {
-        if questionsAsked == questionsPerRound {
-            // Game Over
+        let isRoundOver = QuestionValues.init().verifyRoundContinuation()
+        
+        if isRoundOver == true {
             displayScore()
-        } else {
-            // Continue game
-            displayQuestion()
         }
+        if isRoundOver == false {
+            displayQuestion()
+            
+        }
+        
     }
     
     func loadNextRound(delay seconds: Int) {
@@ -106,38 +95,16 @@ class ViewController: UIViewController {
     
     
     @IBAction func checkTheAnswer(_ sender: UIButton) {
-                // Increment the questions asked counter
-                questionsAsked += 1
-//                var shownAnswer = String()
-                let answerDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
-                let correctAnswer = answerDataPull["Answer"]
-        
-                if (sender == option1 && correctAnswer == "1") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                    
-                } else if  (sender == option2 && correctAnswer == "2") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                    
-                } else if (sender == option3 && correctAnswer == "3") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                  
-                } else if (sender == option4 && correctAnswer == "4") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                } else {
-                    questionField.text = "Sorry, wrong answer!"
-                }
-             
-        
-                loadNextRound(delay: 2)
-        
-        
+
+        switch sender {
+        case option1: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 1)
+        case option2: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 2)
+        case option3: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 3)
+        case option4: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 4)
+        default: break
+        }
+  
+        loadNextRound(delay: 2)
         
     }
     
@@ -145,11 +112,9 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
-        questionsAlreadyAsked = []
         hideOptionButtons()
-        questionsAsked = 0
-        correctQuestions = 0
         nextRound()
+        QuestionValues.init().resetValues()
     }
     
 

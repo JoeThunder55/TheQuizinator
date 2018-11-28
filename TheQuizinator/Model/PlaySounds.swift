@@ -9,16 +9,27 @@
 import UIKit
 import AudioToolbox
 
-var gameSound: SystemSoundID = 0
-
-// MARK: - Helpers
-
-func loadGameStartSound() {
-    let path = Bundle.main.path(forResource: "GameSound", ofType: "wav")
-    let soundUrl = URL(fileURLWithPath: path!)
-    AudioServicesCreateSystemSoundID(soundUrl as CFURL, &gameSound)
+class PlaySounds {
+    
+    init() {
+        loadGameStartSound()
+        playGameStartSound()
+    }
+    var gameSound: SystemSoundID = 0
+    
+    // MARK: - Helpers
+    
+    func loadGameStartSound() {
+        let path = Bundle.main.path(forResource: "GameSound", ofType: "wav")
+        let soundUrl = URL(fileURLWithPath: path!)
+        AudioServicesCreateSystemSoundID(soundUrl as CFURL, &gameSound)
+    }
+    
+    func playGameStartSound() {
+        AudioServicesPlaySystemSound(gameSound)
+    }
+    
+    
 }
 
-func playGameStartSound() {
-    AudioServicesPlaySystemSound(gameSound)
-}
+
