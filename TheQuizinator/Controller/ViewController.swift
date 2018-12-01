@@ -19,24 +19,30 @@ class ViewController: UIViewController {
     @IBOutlet weak var option3: UIButton!
     @IBOutlet weak var option4: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
-    var valuesFromModel = QuestionValues()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         PlaySounds.init().loadGameStartSound()
         PlaySounds.init().playGameStartSound()
         displayQuestion()
+
+
     }
     
- 
+    let dataPull = QuestionManager.init()
+   
+    func retrieveNewQuestion() {
+        dataPull.generateIndex()
+    }
+
     func displayQuestion() {
-        let randomNumber = QuestionValues.init().randomizeIndexNumber()
-        let questionDataPull = QuestionValues.init().retrieveQuestionValues(index: randomNumber)
-        questionField.text = questionDataPull["Question"]
-        option1.setTitle(questionDataPull["Option1"], for: .normal)
-        option2.setTitle(questionDataPull["Option2"], for: .normal)
-        option3.setTitle(questionDataPull["Option3"], for: .normal)
-        option4.setTitle(questionDataPull["Option4"], for: .normal)
+        retrieveNewQuestion()
+        questionField.text = dataPull.question
+        option1.setTitle(dataPull.option1, for: .normal)
+        option2.setTitle(dataPull.option2, for: .normal)
+        option3.setTitle(dataPull.option3, for: .normal)
+        option4.setTitle(dataPull.option4, for: .normal)
         playAgainButton.isHidden = true
         showOptionButtons()
     }
@@ -55,6 +61,16 @@ class ViewController: UIViewController {
         option4.isHidden = false
         
     }
+
+    func nextRound() {
+        let doesQuizEnd = dataPull.nextQuestionOrEndQuiz()
+        if doesQuizEnd == true {
+            displayScore()
+        } else {
+            
+            displayQuestion()
+        }
+    }
     
     func displayScore() {
         // Hide the answer buttons
@@ -63,21 +79,10 @@ class ViewController: UIViewController {
         // Display play again button
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(QuestionValues.init().correctQuestions) out of \(QuestionValues.init().questionsPerRound) correct!"
-    }
-    
-    func nextRound() {
-        let isRoundOver = QuestionValues.init().verifyRoundContinuation()
-        
-        if isRoundOver == true {
-            displayScore()
-        }
-        if isRoundOver == false {
-            displayQuestion()
-            
-        }
+        questionField.text = "Way to go!\nYou got \(dataPull.correctQuestions) out of \(dataPull.questionsPerRound) correct!"
         
     }
+   
     
     func loadNextRound(delay seconds: Int) {
         // Converts a delay in seconds to nanoseconds as signed 64 bit integer
@@ -94,27 +99,26 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     
-    @IBAction func checkTheAnswer(_ sender: UIButton) {
+    @IBAction func retrieveTheAnswer(_ sender: UIButton) {
 
         switch sender {
-        case option1: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 1)
-        case option2: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 2)
-        case option3: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 3)
-        case option4: questionField.text = QuestionValues.checkTheAnswer(buttonInput: 4)
+        case option1: questionField.text = dataPull.checkTheAnswer(buttonInput: 1)
+        case option2: questionField.text = dataPull.checkTheAnswer(buttonInput: 2)
+        case option3: questionField.text = dataPull.checkTheAnswer(buttonInput: 3)
+        case option4: questionField.text = dataPull.checkTheAnswer(buttonInput: 4)
         default: break
         }
-  
         loadNextRound(delay: 2)
-        
     }
     
 
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
-        hideOptionButtons()
+        dataPull.resetValues()
+        dataPull.nextQuestionOrEndQuiz()
         nextRound()
-        QuestionValues.init().resetValues()
+        
     }
     
 

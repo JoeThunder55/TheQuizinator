@@ -27,7 +27,7 @@
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="1"/>
                                 <connections>
-                                    <action selector="checkTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iHB-cD-5EN"/>
+                                    <action selector="retrieveTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VXp-Sq-of8"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qYh-2d-v8I">
@@ -39,7 +39,7 @@
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="2"/>
                                 <connections>
-                                    <action selector="checkTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DpU-1K-I4L"/>
+                                    <action selector="retrieveTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bfs-3C-WtF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nD5-fj-WWv">
@@ -51,7 +51,7 @@
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="3"/>
                                 <connections>
-                                    <action selector="checkTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZhN-PD-NIq"/>
+                                    <action selector="retrieveTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SvZ-AM-NUp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YzD-ym-KrK">
@@ -63,7 +63,7 @@
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="4"/>
                                 <connections>
-                                    <action selector="checkTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bg5-Gd-2UI"/>
+                                    <action selector="retrieveTheAnswer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Kk-A8-Srq"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample Question" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dCF-BL-dDa">
