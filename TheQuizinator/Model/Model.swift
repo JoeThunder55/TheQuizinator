@@ -17,7 +17,7 @@ struct Questions {
 
 class QuestionManager {
     
-    let questionsPerRound = 1
+    let questionsPerRound = 2
     var questionsAsked = 0
     var correctQuestions = 0
     var questionsAlreadyAsked = [Int]()
@@ -29,6 +29,7 @@ class QuestionManager {
     var option4: String
     var answer: String
     var selectedQuestionDict = [String:String]()
+    var timeToResetValues: Bool = false
     
     init() {
         
@@ -93,11 +94,16 @@ class QuestionManager {
             self.questionsAsked = 0
             self.correctQuestions = 0
             self.questionsAlreadyAsked = []
+            self.timeToResetValues = false
         }
     
     func nextQuestionOrEndQuiz() -> Bool {
-        if questionsAsked == questionsPerRound {
+        if questionsAsked == questionsPerRound && timeToResetValues == false {
+            timeToResetValues = true
             return true
+        } else if questionsAsked == questionsPerRound && timeToResetValues == true {
+            resetValues()
+            return false
         } else {
             return false
         }

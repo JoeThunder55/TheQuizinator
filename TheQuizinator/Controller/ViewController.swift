@@ -66,8 +66,7 @@ class ViewController: UIViewController {
         let doesQuizEnd = dataPull.nextQuestionOrEndQuiz()
         if doesQuizEnd == true {
             displayScore()
-        } else {
-            
+        } else { 
             displayQuestion()
         }
     }
@@ -115,8 +114,6 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
-        dataPull.resetValues()
-        dataPull.nextQuestionOrEndQuiz()
         nextRound()
         
     }
