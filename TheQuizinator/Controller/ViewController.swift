@@ -30,11 +30,11 @@ class ViewController: UIViewController {
         
      }
     
-    let dataPull = QuestionManager.init()
+    let questionManager = QuestionManager.init()
     
 
     func displayQuestion() {
-        let datafromModel = dataPull.dataToController()
+        let datafromModel = questionManager.fetchQuestion()
         questionField.text = datafromModel.question
         option1.setTitle(datafromModel.possibleAnswer1, for: .normal)
         option2.setTitle(datafromModel.possibleAnswer2, for: .normal)
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
     }
 
     func nextRound() {
-        let doesQuizEnd = dataPull.nextQuestionOrEndQuiz()
+        let doesQuizEnd = questionManager.nextQuestionOrEndQuiz()
         if doesQuizEnd == true {
             displayScore()
         } else { 
@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         // Display play again button
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(dataPull.correctQuestions) out of \(dataPull.questionsPerRound) correct!"
+        questionField.text = "Way to go!\nYou got \(questionManager.correctQuestions) out of \(questionManager.questionsPerRound) correct!"
         
     }
    
@@ -98,10 +98,10 @@ class ViewController: UIViewController {
     @IBAction func retrieveTheAnswer(_ sender: UIButton) {
 
         switch sender {
-        case option1: questionField.text = dataPull.checkTheAnswer(buttonInput: 1)
-        case option2: questionField.text = dataPull.checkTheAnswer(buttonInput: 2)
-        case option3: questionField.text = dataPull.checkTheAnswer(buttonInput: 3)
-        case option4: questionField.text = dataPull.checkTheAnswer(buttonInput: 4)
+        case option1: questionField.text = questionManager.checkTheAnswer(buttonInput: 1)
+        case option2: questionField.text = questionManager.checkTheAnswer(buttonInput: 2)
+        case option3: questionField.text = questionManager.checkTheAnswer(buttonInput: 3)
+        case option4: questionField.text = questionManager.checkTheAnswer(buttonInput: 4)
         default: break
         }
         loadNextRound(delay: 2)
