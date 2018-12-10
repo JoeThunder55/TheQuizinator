@@ -7,21 +7,10 @@
 //
 
 import UIKit
-import GameKit
 
 
 class ViewController: UIViewController {
-    
-    // MARK: - Properties
-    
-    let questionsPerRound = 10
-    var questionsAsked = 0
-    var correctQuestions = 0
-
-    
-    
- 
-    
+  
     // MARK: - Outlets
     
     @IBOutlet weak var questionField: UILabel!
@@ -34,32 +23,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadGameStartSound()
-        playGameStartSound()
-        displayQuestion()
-    }
+        PlaySounds.loadGameStartSound()
+        PlaySounds.playGameStartSound()
+        
+        nextRound()
+        
+     }
     
- 
+    let questionManager = QuestionManager.init()
+    
+
     func displayQuestion() {
-        Questions.init().randomizeIndexNumber()
-        let questionDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
-        questionField.text = questionDataPull["Question"]
-        option1.setTitle(questionDataPull["Option1"], for: .normal)
-        option2.setTitle(questionDataPull["Option2"], for: .normal)
-        option3.setTitle(questionDataPull["Option3"], for: .normal)
-        option4.setTitle(questionDataPull["Option4"], for: .normal)
+        let datafromModel = questionManager.fetchQuestion()
+        questionField.text = datafromModel.question
+        option1.setTitle(datafromModel.possibleAnswer1, for: .normal)
+        option2.setTitle(datafromModel.possibleAnswer2, for: .normal)
+        option3.setTitle(datafromModel.possibleAnswer3, for: .normal)
+        option4.setTitle(datafromModel.possibleAnswer4, for: .normal)
         playAgainButton.isHidden = true
         showOptionButtons()
     }
-    
-    
     
     func hideOptionButtons() {
         option1.isHidden = true
         option2.isHidden = true
         option3.isHidden = true
         option4.isHidden = true
-        
     }
     
     func showOptionButtons() {
@@ -69,6 +58,15 @@ class ViewController: UIViewController {
         option4.isHidden = false
         
     }
+
+    func nextRound() {
+        let doesQuizEnd = questionManager.nextQuestionOrEndQuiz()
+        if doesQuizEnd == true {
+            displayScore()
+        } else { 
+            displayQuestion()
+        }
+    }
     
     func displayScore() {
         // Hide the answer buttons
@@ -77,18 +75,10 @@ class ViewController: UIViewController {
         // Display play again button
         playAgainButton.isHidden = false
         
-        questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
+        questionField.text = "Way to go!\nYou got \(questionManager.correctQuestions) out of \(questionManager.questionsPerRound) correct!"
+        
     }
-    
-    func nextRound() {
-        if questionsAsked == questionsPerRound {
-            // Game Over
-            displayScore()
-        } else {
-            // Continue game
-            displayQuestion()
-        }
-    }
+   
     
     func loadNextRound(delay seconds: Int) {
         // Converts a delay in seconds to nanoseconds as signed 64 bit integer
@@ -105,51 +95,24 @@ class ViewController: UIViewController {
     // MARK: - Actions
     
     
-    @IBAction func checkTheAnswer(_ sender: UIButton) {
-                // Increment the questions asked counter
-                questionsAsked += 1
-//                var shownAnswer = String()
-                let answerDataPull = Questions.init().presentQuestionValues(index: indexOfSelectedQuestion)
-                let correctAnswer = answerDataPull["Answer"]
-        
-                if (sender == option1 && correctAnswer == "1") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                    
-                } else if  (sender == option2 && correctAnswer == "2") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                    
-                } else if (sender == option3 && correctAnswer == "3") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                  
-                } else if (sender == option4 && correctAnswer == "4") {
-                    correctQuestions += 1
-                    questionField.text = "Correct!"
-                    
-                } else {
-                    questionField.text = "Sorry, wrong answer!"
-                }
-             
-        
-                loadNextRound(delay: 2)
-        
-        
-        
+    @IBAction func retrieveTheAnswer(_ sender: UIButton) {
+
+        switch sender {
+        case option1: questionField.text = questionManager.checkTheAnswer(buttonInput: 1)
+        case option2: questionField.text = questionManager.checkTheAnswer(buttonInput: 2)
+        case option3: questionField.text = questionManager.checkTheAnswer(buttonInput: 3)
+        case option4: questionField.text = questionManager.checkTheAnswer(buttonInput: 4)
+        default: break
+        }
+        loadNextRound(delay: 2)
     }
     
 
     
     @IBAction func playAgain(_ sender: UIButton) {
         // Show the answer buttons
-        questionsAlreadyAsked = []
-        hideOptionButtons()
-        questionsAsked = 0
-        correctQuestions = 0
         nextRound()
+        
     }
     
 
