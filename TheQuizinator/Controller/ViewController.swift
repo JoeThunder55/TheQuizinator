@@ -23,26 +23,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        PlaySounds.init().loadGameStartSound()
-        PlaySounds.init().playGameStartSound()
-        displayQuestion()
-
-
-    }
+        PlaySounds.loadGameStartSound()
+        PlaySounds.playGameStartSound()
+        
+        nextRound()
+        
+     }
     
     let dataPull = QuestionManager.init()
-   
-    func retrieveNewQuestion() {
-        dataPull.generateIndex()
-    }
+    
 
     func displayQuestion() {
-        retrieveNewQuestion()
-        questionField.text = dataPull.question
-        option1.setTitle(dataPull.option1, for: .normal)
-        option2.setTitle(dataPull.option2, for: .normal)
-        option3.setTitle(dataPull.option3, for: .normal)
-        option4.setTitle(dataPull.option4, for: .normal)
+        let datafromModel = dataPull.dataToController()
+        questionField.text = datafromModel.question
+        option1.setTitle(datafromModel.possibleAnswer1, for: .normal)
+        option2.setTitle(datafromModel.possibleAnswer2, for: .normal)
+        option3.setTitle(datafromModel.possibleAnswer3, for: .normal)
+        option4.setTitle(datafromModel.possibleAnswer4, for: .normal)
         playAgainButton.isHidden = true
         showOptionButtons()
     }
